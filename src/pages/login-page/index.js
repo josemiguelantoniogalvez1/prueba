@@ -1,16 +1,10 @@
-import { FormContainer } from "../../components"
-import { TextField, Card, Input, Button, } from "@mui/material"
-import { SpaceBar } from "@mui/icons-material"
+import { AuthContainer } from "../../components"
+import { TextField, Card, Button, } from "@mui/material"
 import { Link } from "react-router-dom"
-import bgimage from "../../assets/fondo1.webp"
-
 
 export function LoginPage() {
   return (
-    <div id="auth-container" style={{
-      backgroundImage:`url(${bgimage})`,
-      
-    }}>
+    <AuthContainer>
       <Card sx={{
         width: "25rem",
         minHeight: "25rem",
@@ -41,13 +35,11 @@ export function LoginPage() {
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between"
-
-
         }}>
           <span>¿No tienes cuenta?</span>
           <Link>Registrarme</Link>
         </div>
       </Card>
-    </div>
+    </AuthContainer>
   )
 }
