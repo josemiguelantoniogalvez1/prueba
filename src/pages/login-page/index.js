@@ -2,19 +2,14 @@ import { FormContainer } from "../../components"
 import { TextField, Card, Input, Button, } from "@mui/material"
 import { SpaceBar } from "@mui/icons-material"
 import { Link } from "react-router-dom"
-
+import bgimage from "../../assets/fondo1.webp"
 
 
 export function LoginPage() {
   return (
-    <div style={{
-      height: "100%",
-      dysplay: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center",
-      minHeight: "50rem",
-      alignContent: "center"
+    <div id="auth-container" style={{
+      backgroundImage:`url(${bgimage})`,
+      
     }}>
       <Card sx={{
         width: "25rem",
