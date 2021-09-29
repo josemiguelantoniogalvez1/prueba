@@ -3,16 +3,33 @@ import { TextField, Card, Button, Alert, } from "@mui/material"
 import { Link } from "react-router-dom"
 import { AuthService } from "../../services"
 import { AlternateEmail } from "@mui/icons-material"
+import { useState } from "react"
 
 export function LoginPage() {
 
-  const onLogin = () => {
+  const [state, setState] = useState({
+    loading: false,
+    error: null,
+    email: null,
+    password: null
+  })
+
+  const onInputChange = (field = {}) => {
+    setState(prev => {
+      return ({
+        ...prev,
+        ...field
+      })
+    })
+  }
+
+  const onLogin = async () => {
     try {
-      const result = AuthService.login("ejemplo", "contraseña")
+      const result = await AuthService.login(state.email, state.password)
       if (result === true) {
         alert("prueba exitosa")
-      } else { 
-        alert("contraseña incorrectos") 
+      } else {
+        alert("contraseña incorrectos")
       }
     }
     catch (error) {
@@ -32,11 +49,13 @@ export function LoginPage() {
       }}>
         <h3>Bienvenido</h3>
         <TextField
+          onChange={e => onInputChange({ email: e.target.value })}
           variant="standard"
           multiline={false}
           label="Correo electronico"
           style={{ width: "100%" }} />
         <TextField
+          onChange={e => onInputChange({ password: e.target.value })}
           variant="standard"
           multiline={false}
           label="Contraseña"
