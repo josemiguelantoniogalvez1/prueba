@@ -1,8 +1,25 @@
 import { AuthContainer } from "../../components"
-import { TextField, Card, Button, } from "@mui/material"
+import { TextField, Card, Button, Alert, } from "@mui/material"
 import { Link } from "react-router-dom"
+import { AuthService } from "../../services"
+import { AlternateEmail } from "@mui/icons-material"
 
 export function LoginPage() {
+
+  const onLogin = () => {
+    try {
+      const result = AuthService.login("ejemplo", "contraseña")
+      if (result === true) {
+        alert("prueba exitosa")
+      } else { 
+        alert("contraseña incorrectos") 
+      }
+    }
+    catch (error) {
+      alert("ocurrio un error inesperado")
+    }
+  }
+
   return (
     <AuthContainer>
       <Card sx={{
@@ -26,6 +43,7 @@ export function LoginPage() {
           style={{ width: "100%" }}
           type="password" />
         <Button
+          onClick={onLogin}
           variant="contained"
           sx={{ width: "100%", marginTop: "2rem" }}>
           Iniciar sesion
