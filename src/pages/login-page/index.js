@@ -1,8 +1,7 @@
 import { AuthContainer } from "../../components"
-import { TextField, Card, Button, Alert, } from "@mui/material"
+import { TextField, Card, Button } from "@mui/material"
 import { Link } from "react-router-dom"
 import { AuthService } from "../../services"
-import { AlternateEmail } from "@mui/icons-material"
 import { useState } from "react"
 
 export function LoginPage() {

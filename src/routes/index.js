@@ -14,6 +14,9 @@ export function Routes() {
         <Route path="/login">
           <Pages.LoginPage />
         </Route>
+        <Route path="/register">
+          <Pages.RegisterPage />
+        </Route>
       </Switch>
     </Router>
   )
