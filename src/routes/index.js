@@ -17,6 +17,9 @@ export function Routes() {
         <Route path="/register">
           <Pages.RegisterPage />
         </Route>
+        <Route path="/dashboard">
+          <Pages.DashboardPage />
+        </Route>
       </Switch>
     </Router>
   )

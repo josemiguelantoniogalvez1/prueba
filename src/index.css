@@ -37,3 +37,40 @@ code {
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+.navbar {
+  position: fixed;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 40;
+  background-color: rgb(4, 103, 121);
+  border-bottom: 1px solid 0.1;
+  font-weight: bold;
+  padding: 0px 20px;
+  box-sizing: border-box;
+  padding: 0.5rem;
+}
+
+ul.navbar-menu-items {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+ul.navbar-menu-items > li {
+  box-sizing: border-box;
+  padding: 0.25rem 1rem;
+  border-radius: 1rem;
+  color: #fff;
+}
+
+ul.navbar-menu-items > li:hover {
+  cursor: pointer;
+}
