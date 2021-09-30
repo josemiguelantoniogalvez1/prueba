@@ -70,7 +70,10 @@ export function useTimezoneInteractions() {
 
     setState(prevState => ({
       ...prevState,
-      timezoneLocaltime: timezoneData?.localtime
+      timezoneLocaltime: {
+        ...selectedTimezone || {},
+        ...timezoneData || {}
+      }
     }))
 
     setLoading(false)

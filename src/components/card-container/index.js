@@ -19,7 +19,11 @@ export function CardContainer(props) {
   return (
     <Card
       raised
-      sx={{ minHeight: "13rem", ...style }}>
+      sx={{
+        minHeight: "13rem",
+        height: "100%",
+        ...style
+      }}>
       <CardContent>
         <Typography
           sx={{ fontSize: 16, borderBottom: "2px solid #0BF" }}

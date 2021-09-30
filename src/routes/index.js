@@ -10,6 +10,9 @@ export function Routes() {
   return (
     <Router>
       <Switch>
+        <Route path="/" exact>
+          <Pages.LoginPage />
+        </Route>
         <Route path="/login">
           <Pages.LoginPage />
         </Route>
