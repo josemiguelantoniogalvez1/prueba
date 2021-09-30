@@ -8,7 +8,15 @@ export function useTimezoneInteractions() {
     timezoneLocaltime: null,
     availableCountries: [],
     countryTimezones: [],
+    loading: false
   })
+
+  const setLoading = (loading) => {
+    setState(prevState => ({
+      ...prevState,
+      loading
+    }))
+  }
 
   useEffect(() => {
     loadCountries()
@@ -16,15 +24,19 @@ export function useTimezoneInteractions() {
   }, [])
 
   const loadCountries = async () => {
+    setLoading(true)
     const availableCountries = await TimezoneService.getCountries()
 
     setState(prevState => ({
       ...prevState,
       availableCountries
     }))
+
+    setLoading(false)
   }
 
   const loadCountryData = async (countryId, countryName) => {
+    setLoading(true)
     const selectedCountry = await TimezoneService.getCountry(countryId, countryName)
 
     const countryTimezones = await TimezoneService.getAreaTimezones(selectedCountry.area)
@@ -40,9 +52,11 @@ export function useTimezoneInteractions() {
     }))
 
     loadTimezone(defaultSelectedTimezone.timezone_id)
+    setLoading(false)
   }
 
   const loadTimezone = async (timezone_id) => {
+    setLoading(true)
     const selectedTimezone = state
       .countryTimezones
       ?.find(tz => tz.timezone_id === timezone_id)
@@ -58,6 +72,8 @@ export function useTimezoneInteractions() {
       ...prevState,
       timezoneLocaltime: timezoneData?.localtime
     }))
+
+    setLoading(false)
   }
 
   return ({
@@ -66,6 +82,7 @@ export function useTimezoneInteractions() {
     availableCountries: state.availableCountries,
     countryTimezones: state.countryTimezones,
     timezoneLocaltime: state.timezoneLocaltime,
+    loading: state.loading,
     loadCountryData,
     loadCountries,
     loadTimezone

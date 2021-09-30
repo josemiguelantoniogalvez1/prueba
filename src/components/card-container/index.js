@@ -1,7 +1,20 @@
-import { Card, CardContent, Typography } from "@mui/material"
+import {
+  Card,
+  CardContent,
+  Typography,
+  Skeleton
+} from "@mui/material"
 
 export function CardContainer(props) {
   const style = props.sx || {}
+
+  const skeleton = (
+    <>
+      <Skeleton variant="text" />
+      <Skeleton variant="text" />
+      <Skeleton variant="text" />
+    </>
+  )
 
   return (
     <Card
@@ -14,7 +27,11 @@ export function CardContainer(props) {
           gutterBottom>
           {props.title}
         </Typography>
-        {props.children}
+        {
+          props.loading
+          ? skeleton
+          : props.children
+        }
       </CardContent>
     </Card>
   )

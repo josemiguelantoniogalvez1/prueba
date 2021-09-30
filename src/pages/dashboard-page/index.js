@@ -4,7 +4,7 @@ import { useTasks, useTimezoneInteractions, useWeatherInteractions } from "../..
 const cardsStyle = { display: "flex", flexDirection: "column", gap: "2rem" }
 
 export function DashboardPage() {
-  const { completedTasks, pendingTasks } = useTasks()
+  const { completedTasks, pendingTasks, loading: loadingTasks } = useTasks()
   
   const {
     selectedCountry,
@@ -13,10 +13,11 @@ export function DashboardPage() {
     availableCountries,
     countryTimezones,
     loadCountryData,
-    loadTimezone
+    loadTimezone,
+    loading: loadingTimezone
   } = useTimezoneInteractions()
 
-  const { selectedWeather, loadCountryWeather } = useWeatherInteractions("Mexico")
+  const { selectedWeather, loadCountryWeather, loading: loadingWeather } = useWeatherInteractions("Mexico")
 
   const onClickCountry = (country) => {
     loadCountryWeather(country.name)
@@ -31,32 +32,32 @@ export function DashboardPage() {
     <Layout>
       <div class="weather-grid">
         <div style={cardsStyle}>
-          <CardContainer title="Clima">
-            <img src={selectedWeather?.img} />
+          <CardContainer title="Clima" loading={loadingWeather}>
+            <img src={selectedWeather?.img} alt="clima-img" />
             {[selectedWeather?.grades, selectedWeather?.measure]
               .filter(text => !!text)
               .join(" ")}
             {`${selectedWeather?.label || "--"}`}
           </CardContainer>
-          <CardContainer title="Tareas pendientes">
+          <CardContainer title="Tareas pendientes" loading={loadingTasks}>
             <TasksList todo tasks={pendingTasks} />
           </CardContainer>
-          <CardContainer title="Tareas completadas">
+          <CardContainer title="Tareas completadas" loading={loadingTasks}>
             <TasksList tasks={completedTasks} />
           </CardContainer>
         </div>
         <div style={cardsStyle}>
-          <CardContainer title="País seleccionado">
+          <CardContainer title="País seleccionado" loading={loadingTimezone}>
             {selectedCountry?.name}
             <span style={{ fontSize: "4rem" }}>
               {selectedCountry?.flag}
             </span>
           </CardContainer>
-          <CardContainer title="Hora">
+          <CardContainer title="Hora" loading={loadingTimezone}>
             {timezoneLocaltime}
             {selectedTimezone?.name}
           </CardContainer>
-          <CardContainer title="Zonas horarias disponibles">
+          <CardContainer title="Zonas horarias disponibles" loading={loadingTimezone}>
             <ul style={{ maxHeight: "13rem", overflowY: "auto" }}>
               {countryTimezones?.map(tZone => (
                 <li
