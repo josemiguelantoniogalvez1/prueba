@@ -11,7 +11,7 @@ export function useTimezoneInteractions() {
 
   useEffect(() => {
     loadCountries()
-    loadCountryData("MX")
+    loadCountryData("MX", "Mexico")
   }, [])
 
   const loadCountries = async () => {
@@ -23,10 +23,10 @@ export function useTimezoneInteractions() {
     }))
   }
 
-  const loadCountryData = async (countryId) => {
-    const selectedCountry = await TimezoneService.getCountry(countryId)
-    const countryTimezones = await TimezoneService.getCountryTimezones(countryId)
+  const loadCountryData = async (countryId, countryName) => {
+    const selectedCountry = await TimezoneService.getCountry(countryId, countryName)
 
+    const countryTimezones = await TimezoneService.getAreaTimezones(selectedCountry.area)
     const [defaultTimezone] = countryTimezones ?? []
 
     setState(prevState => ({

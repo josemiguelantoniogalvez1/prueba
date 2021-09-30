@@ -92,6 +92,6 @@ ul.navbar-menu-items > li:hover {
   list-style: none;
 }
 
-.clickable:hover{
-  cursor:pinter;
+.clickable:hover {
+  cursor: pointer;
 }

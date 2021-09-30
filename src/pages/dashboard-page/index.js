@@ -19,7 +19,7 @@ export function DashboardPage() {
 
   const onClickCountry = (country) => {
     loadCountryWeather(country.name)
-    loadCountryData(country.country_id)
+    loadCountryData(country.country_id, country.name)
   }
 
   return (
