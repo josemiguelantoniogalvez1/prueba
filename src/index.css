@@ -91,3 +91,7 @@ ul.navbar-menu-items > li:hover {
 .tasks-list > li {
   list-style: none;
 }
+
+.clickable:hover{
+  cursor:pinter;
+}

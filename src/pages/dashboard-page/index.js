@@ -17,6 +17,11 @@ export function DashboardPage() {
 
   const { selectedWeather, loadCountryWeather } = useWeatherInteractions("Mexico")
 
+  const onClickCountry = (country) => {
+    loadCountryWeather(country.name)
+    loadCountryData(country.country_id)
+  }
+
   return (
     <Layout>
       <div class="weather-grid">
@@ -65,6 +70,8 @@ export function DashboardPage() {
                 <ul>
                   {availableCountries?.map(country => (
                     <li
+                      onClick={() => onClickCountry(country)}
+                      className="clickable"
                       style={{
                         listStyle: "none",
                         display: "flex",
