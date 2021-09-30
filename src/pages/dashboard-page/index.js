@@ -15,15 +15,18 @@ export function DashboardPage() {
     loadTimezone
   } = useTimezoneInteractions()
 
-  const { selectedWeather, loadCountryWeather } = useWeatherInteractions("MX")
+  const { selectedWeather, loadCountryWeather } = useWeatherInteractions("Mexico")
 
   return (
     <Layout>
       <div class="weather-grid">
         <div style={cardsStyle}>
           <CardContainer title="Clima">
-            {`${selectedWeather?.grades} ${selectedWeather?.measure}`}
-            {`${selectedWeather?.label}`}
+            <img src={selectedWeather?.img} />
+            {[selectedWeather?.grades, selectedWeather?.measure]
+              .filter(text => !!text)
+              .join(" ")}
+            {`${selectedWeather?.label || "--"}`}
           </CardContainer>
           <CardContainer title="Tareas pendientes">
             <TasksList todo tasks={pendingTasks} />
@@ -35,6 +38,9 @@ export function DashboardPage() {
         <div style={cardsStyle}>
           <CardContainer title="País seleccionado">
             {selectedCountry?.name}
+            <span style={{ fontSize: "4rem" }}>
+              {selectedCountry?.flag}
+            </span>
           </CardContainer>
           <CardContainer title="Hora">
             Tareas pendientes

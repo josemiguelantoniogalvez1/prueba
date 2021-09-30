@@ -15,15 +15,31 @@ const timezones = [
 async function getCountries() {
   const results = await axios.get("https://restcountries.com/v3.1/all")
 
-  const countries = results.data?.map(result => (
-    { country_id: result.cca2, name: result.name?.common, flag: result.flag }
-  ))
+  const countries = results.data?.map(result => ({
+    country_id: result.cca2,
+    name: result.name?.common,
+    flag: result.flag
+  }))
 
   return countries
 }
 
 async function getCountry(country_id) {
-  return countries.find(country => country.country_id === country_id)
+  const { data } = await axios.get(`https://restcountries.com/v3.1/alpha/${country_id}`)
+
+  let country = null
+
+  if (data.length > 0) {
+    country = data[0]
+  }
+
+  const fommatedCountry = {
+    country_id: country?.cca2,
+    name: country?.name?.common,
+    flag: country?.flag
+  }
+
+  return fommatedCountry
 }
 
 async function getCountryTimezones(country_id) {

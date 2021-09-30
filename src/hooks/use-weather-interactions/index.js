@@ -10,8 +10,8 @@ export function useWeatherInteractions(defaultCountry = "") {
     loadCountryWeather(defaultCountry)
   }, [defaultCountry])
 
-  const loadCountryWeather = async (countryId) => {
-    const weather = await WeatherService.getCountryWeather(countryId)
+  const loadCountryWeather = async (countryName) => {
+    const weather = await WeatherService.getCountryWeather(countryName)
 
     setState(prevState => ({
       ...prevState,
