@@ -51,7 +51,6 @@ async function getCountry(country_id, countryName) {
 }
 
 async function getAreaTimezones(area) {
-
   const { data } = await axios.get(`https://worldtimeapi.org/api/timezone/${area}`)
 
   return data?.map((timeZone, idx) => ({
@@ -61,8 +60,25 @@ async function getAreaTimezones(area) {
   ) || []
 }
 
+async function getTimezoneData(timezone) {
+  const { data } = await axios.get(`http://api.weatherapi.com/v1/timezone.json?key=fa8df0b410374aff8b561455213009&q=${timezone}`)
+  
+  const formatedTimezone = {
+    name: data?.location?.name,
+    country: data?.location?.country,
+    tz_id: data?.location?.tz_id,
+    epoch: data?.location?.localtime_epoch,
+    localtime: data?.location?.localtime
+  }
+
+  return formatedTimezone
+}
+
+
+
 export const TimezoneService = {
   getCountries,
   getCountry,
-  getAreaTimezones
+  getAreaTimezones,
+  getTimezoneData
 }

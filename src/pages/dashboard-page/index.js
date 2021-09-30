@@ -9,6 +9,7 @@ export function DashboardPage() {
   const {
     selectedCountry,
     selectedTimezone,
+    timezoneLocaltime,
     availableCountries,
     countryTimezones,
     loadCountryData,
@@ -20,6 +21,10 @@ export function DashboardPage() {
   const onClickCountry = (country) => {
     loadCountryWeather(country.name)
     loadCountryData(country.country_id, country.name)
+  }
+
+  const onClickTimezone = (timezoneId) => {
+    loadTimezone(timezoneId)
   }
 
   return (
@@ -48,12 +53,15 @@ export function DashboardPage() {
             </span>
           </CardContainer>
           <CardContainer title="Hora">
-            Tareas pendientes
+            {timezoneLocaltime}
+            {selectedTimezone?.name}
           </CardContainer>
           <CardContainer title="Zonas horarias disponibles">
-            <ul>
+            <ul style={{ maxHeight: "13rem", overflowY: "auto" }}>
               {countryTimezones?.map(tZone => (
                 <li
+                  onClick={() => onClickTimezone(tZone.timezone_id)}
+                  className="clickable"
                   style={{ listStyle: "none" }}
                   key={tZone.timezone_id}>
                   {tZone.name}
