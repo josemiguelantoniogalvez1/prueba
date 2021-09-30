@@ -2,6 +2,7 @@ import { AuthContainer } from "../../components"
 import { TextField, Card, Button } from "@mui/material"
 import { AuthService } from "../../services"
 import { useState } from "react"
+import { Link } from "react-router-dom"
 
 export function RegisterPage() {
 
@@ -80,6 +81,9 @@ export function RegisterPage() {
           sx={{ width: "100%", marginTop: "1rem" }}>
           Registrarme
         </Button>
+        <Link to="/login" style={{ textAlign: "center" }}>
+          Iniciar sesión
+        </Link>
         <div style={{
           width: "100%",
           display: "flex",

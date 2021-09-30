@@ -2,7 +2,7 @@ import React from "react";
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
 } from "react-router-dom";
 import * as Pages from "../pages"
 

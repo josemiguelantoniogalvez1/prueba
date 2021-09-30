@@ -1,10 +1,11 @@
 import { AuthContainer } from "../../components"
 import { TextField, Card, Button } from "@mui/material"
-import { Link } from "react-router-dom"
+import { Link, useHistory } from "react-router-dom"
 import { AuthService } from "../../services"
 import { useState } from "react"
 
 export function LoginPage() {
+  const history = useHistory()
 
   const [state, setState] = useState({
     loading: false,
@@ -26,13 +27,13 @@ export function LoginPage() {
     try {
       const result = await AuthService.login(state.email, state.password)
       if (result === true) {
-        alert("prueba exitosa")
+        history.push("/dashboard")
       } else {
-        alert("contraseña incorrectos")
+        alert("Usuario o contraseña incorrectos")
       }
     }
     catch (error) {
-      alert("ocurrio un error inesperado")
+      alert("Error. Ingresa el usuario y contraseña")
     }
   }
 
@@ -73,7 +74,7 @@ export function LoginPage() {
           justifyContent: "space-between"
         }}>
           <span>¿No tienes cuenta?</span>
-          <Link>Registrarme</Link>
+          <Link to="/register">Registrarme</Link>
         </div>
       </Card>
     </AuthContainer>
