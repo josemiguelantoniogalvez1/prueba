@@ -59,19 +59,19 @@ export function DashboardPage() {
         <div style={cardsStyle}>
           <CardContainer
             title="País seleccionado"
-            loading={loadingTimezone}>
+            loading={loadingTimezone.loadingCountryData}>
             <SelectedCountry country={selectedCountry} />
           </CardContainer>
           <CardContainer
             title="Hora"
-            loading={loadingTimezone}>
+            loading={loadingTimezone.loadingTimezoneData}>
             <Clock
               localtime={timezoneLocaltime}
               timezone={selectedTimezone}  />
           </CardContainer>
           <CardContainer
             title="Zonas horarias disponibles"
-            loading={loadingTimezone}>
+            loading={loadingTimezone.loadingCountryAreaTimezones}>
             <TimezonesList
               onClickTimezone={onClickTimezone}
               timezones={countryTimezones} />
@@ -79,6 +79,7 @@ export function DashboardPage() {
         </div>
         <div style={cardsStyle}>
           <CardContainer
+            loading={loadingTimezone.loadingContries}
             title="Países disponibles"
             sx={{ height: "100%" }}>
             <CountriesList

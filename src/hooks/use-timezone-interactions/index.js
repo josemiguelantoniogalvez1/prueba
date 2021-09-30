@@ -8,13 +8,16 @@ export function useTimezoneInteractions() {
     timezoneLocaltime: null,
     availableCountries: [],
     countryTimezones: [],
-    loading: false
+    loadingContries: false,
+    loadingCountryData: false,
+    loadingCountryAreaTimezones: false,
+    loadingTimezoneData: false
   })
 
-  const setLoading = (loading) => {
+  const setLoading = (loadingState = {}) => {
     setState(prevState => ({
       ...prevState,
-      loading
+      ...loadingState
     }))
   }
 
@@ -24,59 +27,81 @@ export function useTimezoneInteractions() {
   }, [])
 
   const loadCountries = async () => {
-    setLoading(true)
-    const availableCountries = await TimezoneService.getCountries()
+    setLoading({ loadingContries: true })
 
-    setState(prevState => ({
-      ...prevState,
-      availableCountries
-    }))
+    try {
+      const availableCountries = await TimezoneService.getCountries()
 
-    setLoading(false)
+      setState(prevState => ({
+        ...prevState,
+        availableCountries
+      }))
+    } catch (e) {
+      console.error(e)
+    } finally {
+      setLoading({ loadingContries: false })
+    }
   }
 
   const loadCountryData = async (countryId, countryName) => {
-    setLoading(true)
-    const selectedCountry = await TimezoneService.getCountry(countryId, countryName)
+    setLoading({
+      loadingCountryData: true,
+      loadingCountryAreaTimezones: true
+    })
 
-    const countryTimezones = await TimezoneService.getAreaTimezones(selectedCountry.area)
-    const [defaultTimezone] = countryTimezones ?? []
+    try {
+      const selectedCountry = await TimezoneService.getCountry(countryId, countryName)
 
-    const defaultSelectedTimezone = state.selectedTimezone || defaultTimezone
+      const countryTimezones = await TimezoneService.getAreaTimezones(selectedCountry.area)
+      const [defaultTimezone] = countryTimezones ?? []
 
-    setState(prevState => ({
-      ...prevState,
-      selectedCountry,
-      countryTimezones,
-      selectedTimezone: defaultSelectedTimezone
-    }))
+      const defaultSelectedTimezone = state.selectedTimezone || defaultTimezone
 
-    loadTimezone(defaultSelectedTimezone.timezone_id)
-    setLoading(false)
+      setState(prevState => ({
+        ...prevState,
+        selectedCountry,
+        countryTimezones,
+        selectedTimezone: defaultSelectedTimezone
+      }))
+
+      loadTimezone(defaultSelectedTimezone.timezone_id)
+    } catch (e) {
+      console.error(e)
+    } finally {
+      setLoading({
+        loadingCountryData: false,
+        loadingCountryAreaTimezones: false
+      })
+    }
   }
 
   const loadTimezone = async (timezone_id) => {
-    setLoading(true)
-    const selectedTimezone = state
-      .countryTimezones
-      ?.find(tz => tz.timezone_id === timezone_id)
+    setLoading({ loadingTimezoneData: true })
 
-    setState(prevState => ({
-      ...prevState,
-      selectedTimezone
-    }))
+    try {
+      const selectedTimezone = state
+        .countryTimezones
+        ?.find(tz => tz.timezone_id === timezone_id)
 
-    const timezoneData = await TimezoneService.getTimezoneData(selectedTimezone?.name)
+      setState(prevState => ({
+        ...prevState,
+        selectedTimezone
+      }))
 
-    setState(prevState => ({
-      ...prevState,
-      timezoneLocaltime: {
-        ...selectedTimezone || {},
-        ...timezoneData || {}
-      }
-    }))
+      const timezoneData = await TimezoneService.getTimezoneData(selectedTimezone?.name)
 
-    setLoading(false)
+      setState(prevState => ({
+        ...prevState,
+        timezoneLocaltime: {
+          ...selectedTimezone || {},
+          ...timezoneData || {}
+        }
+      }))
+    } catch (e) {
+      console.error(e)
+    } finally {
+      setLoading({ loadingTimezoneData: false })
+    }
   }
 
   return ({
@@ -85,7 +110,12 @@ export function useTimezoneInteractions() {
     availableCountries: state.availableCountries,
     countryTimezones: state.countryTimezones,
     timezoneLocaltime: state.timezoneLocaltime,
-    loading: state.loading,
+    loading: {
+      loadingContries: state.loadingContries,
+      loadingCountryData: state.loadingCountryData,
+      loadingCountryAreaTimezones: state.loadingCountryAreaTimezones,
+      loadingTimezoneData: state.loadingTimezoneDatae
+    },
     loadCountryData,
     loadCountries,
     loadTimezone
