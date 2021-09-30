@@ -2,15 +2,18 @@ import { AuthContainer } from "../../components"
 import { TextField, Card, Button } from "@mui/material"
 import { AuthService } from "../../services"
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useHistory } from "react-router-dom"
 
 export function RegisterPage() {
+  const history = useHistory()
 
   const [state, setState] = useState({
     loading: false,
     error: null,
     email: null,
-    password: null
+    password: null,
+    repeatedPassword: null,
+    fullName: null
   })
 
   const onInputChange = (field = {}) => {
@@ -22,17 +25,27 @@ export function RegisterPage() {
     })
   }
 
-  const onLogin = async () => {
-    try {
-      const result = await AuthService.login(state.email, state.password)
-      if (result === true) {
-        alert("prueba exitosa")
-      } else {
-        alert("contraseña incorrectos")
-      }
+  const onRegister = async () => {
+    if (state.password !== state.repeatedPassword) {
+      alert("Las contraseñas no coinciden")
+      return;
     }
-    catch (error) {
-      alert("ocurrio un error inesperado")
+
+    try {
+      const newUser = await AuthService.registerUser({
+        email: state.email,
+        password: state.password,
+        fullName: state.fullName
+      })
+
+      if (newUser) {
+        alert("Registro existoso, ahora puedes iniciar sesión")
+        history.push("/login")
+      } else {
+        alert("No se pudo registrar el usuario")
+      }
+    } catch (error) {
+      alert(error.message)
     }
   }
 
@@ -50,9 +63,9 @@ export function RegisterPage() {
         <TextField
           variant="standard"
           multiline={false}
-          label="Correo electronico"
-          style={{ width: "100%" }} />
-          
+          label="Correo electrónico"
+          style={{ width: "100%" }}
+          onChange={e => onInputChange({ email: e.target.value })} />
 
         <TextField
           variant="standard"
@@ -60,23 +73,25 @@ export function RegisterPage() {
           label="Contraseña"
           style={{ width: "100%" }}
           type="password"
-          />
+          onChange={e => onInputChange({ password: e.target.value })} />
 
         <TextField
           variant="standard"
           multiline={false}
           label="Confirmar Contraseña"
           style={{ width: "100%" }}
-          type="password" />
+          type="password"
+          onChange={e => onInputChange({ repeatedPassword: e.target.value })}  />
 
         <TextField
           variant="standard"
           multiline={false}
           label="Nombre completo"
-          style={{ width: "100%" }} />
+          style={{ width: "100%" }}
+          onChange={e => onInputChange({ fullName: e.target.value })}  />
 
         <Button
-          onClick={onLogin}
+          onClick={onRegister}
           variant="contained"
           sx={{ width: "100%", marginTop: "1rem" }}>
           Registrarme
