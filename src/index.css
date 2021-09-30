@@ -74,3 +74,20 @@ ul.navbar-menu-items > li {
 ul.navbar-menu-items > li:hover {
   cursor: pointer;
 }
+
+.weather-grid {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr;
+  grid-gap: 10px;
+  /*background-color: #2196F3;*/
+  padding: 10px;
+}
+
+.weather-grid > div {
+  /*background-color: rgba(255, 255, 255, 0.8);*/
+  padding: 20px 0;
+}
+
+.tasks-list > li {
+  list-style: none;
+}
