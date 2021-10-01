@@ -22,6 +22,9 @@ export function Routes() {
         <Route path="/dashboard">
           <Pages.DashboardPage />
         </Route>
+        <Route path="/users">
+          <Pages.UsersPage />
+        </Route>
       </Switch>
     </Router>
   )

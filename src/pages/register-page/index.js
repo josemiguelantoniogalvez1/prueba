@@ -61,6 +61,7 @@ export function RegisterPage() {
       }}>
         <h3>Crear cuenta</h3>
         <TextField
+          autoFocus
           variant="standard"
           multiline={false}
           label="Correo electrónico"

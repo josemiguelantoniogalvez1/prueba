@@ -49,6 +49,7 @@ export function LoginPage() {
       }}>
         <h3>Bienvenido</h3>
         <TextField
+          autoFocus
           onChange={e => onInputChange({ email: e.target.value })}
           variant="standard"
           multiline={false}
