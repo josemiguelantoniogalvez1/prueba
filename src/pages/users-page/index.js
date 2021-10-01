@@ -39,7 +39,9 @@ export function UsersPage() {
 
   const columns = [
     { field: 'email', headerName: 'E-mail', width: 200 },
-    { field: 'fullName', headerName: 'Nombre completo', width: 300 }
+    { field: 'fullName', headerName: 'Nombre completo', width: 300 },
+    { field: 'register_date', headerName: 'Fecha de registro', width: 300 },
+    { field: 'last_login', headerName: 'Ùltimo login', width: 300 }
   ]
 
   return (

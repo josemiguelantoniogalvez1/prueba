@@ -1,8 +1,9 @@
 import * as uuid from "uuid"
+import { UsersService } from "../users-service"
 
 const defaultUsers = [
-  { email: "miguel@gmail.com", password: "migelon", fullName: "jose miguel antonio", id: 1 },
-  { email: "ejemplo@gmail.com", password: "ejemplo", fullName: "guitierritos gutierritos", id: 2 },
+  { email: "miguel@gmail.com", password: "migelon", fullName: "jose miguel antonio", id: 1, register_date: null, last_login: null },
+  { email: "ejemplo@gmail.com", password: "ejemplo", fullName: "guitierritos gutierritos", id: 2, register_date: null, last_login: null },
 ]
 
 async function login(email, password) {
@@ -24,6 +25,8 @@ async function login(email, password) {
   })
 
   if (user?.password === password) {
+    const today = new Date()
+    UsersService.updateUser({ ...user, last_login: today.toISOString() })
     return true
   } else {
     return false
@@ -35,7 +38,6 @@ const registerUser = (user = {
   password: undefined,
   fullName: undefined
 }) => {
-
   if (!Object.values(user).every(value => !!value)) {
     throw new Error("Los datos del usuario son requeridos")
   }
@@ -58,6 +60,10 @@ const registerUser = (user = {
   if (user.fullName?.length < 9) {
     throw new Error("El nombre es demasiado corto")
   }
+
+  // inyectar fecha de registro
+  const today = new Date()
+  user.register_date = today.toISOString()
 
   const newStoredUsers = [...prevStoredUsers, user]
 
